@@ -43,6 +43,26 @@
 | say | 发言推送 | {"type":"say ","msg_id":"423423452353252354","client_id":"0xi9090808","nickname":"chenjia404" ,"content":"Hello, World!","time":1508157282} |
 | reply_logout | 响应退出聊天室 | {"type":"reply_login","code":0,"msg":"再见，欢迎下次再见～"} |
 
+通用返回结构:
+```
+{
+    "code":0,
+    "msg":"成功登录",
+    "type":"reply_login",
+    "data":{
+    "language":"zh-cn",
+    "username":"chenjia404"
+    }
+}
+```
+code 字段为0则表示成功,非零 code 表示错误,每一个类型的错误使用唯一的错误码。
+
+msg 字段为提示信息，需要对用户优化，可以直接提示给用户，支持多语言。
+
+data 字段为实际返回字段，根据不同数据做不同的处理。
+
+type 字段标记消息类型。
+
 **错误码**
 
 待定
