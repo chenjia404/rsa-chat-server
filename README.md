@@ -48,11 +48,33 @@
 {
     "code":0,
     "msg":"成功登录",
-    "type":"reply_login",
     "data":{
-    "language":"zh-cn",
-    "username":"chenjia404"
+        "type":"reply_login",
+        "language":"zh-cn",
+        "username":"chenjia404"
     }
+}
+```
+
+聊天内容样例:
+```
+{
+    "code":0,
+    "msg":"成功登录",
+    "data":
+    {
+        "type":"say",
+        "msg_id":"423423452353252354",
+        "username":"chenjia404",
+        "content":"Hello, World!",
+        "time":1508157282,
+        "img":"https://tva3.sinaimg.cn/crop.19.12.155.155.180/659c6c35gw1f3swxjt6ooj2050050q30.jpg"
+        "attachment":
+        {
+            "name":"rar.zip",
+            "link":"https://cn.vuejs.org/v2/guide/class-and-style.html"
+        }
+    } 
 }
 ```
 code 字段为0则表示成功,非零 code 表示错误,每一个类型的错误使用唯一的错误码。
@@ -60,8 +82,6 @@ code 字段为0则表示成功,非零 code 表示错误,每一个类型的错误
 msg 字段为提示信息，需要对用户优化，可以直接提示给用户，支持多语言。
 
 data 字段为实际返回字段，根据不同数据做不同的处理。
-
-type 字段标记消息类型。
 
 **错误码**
 
