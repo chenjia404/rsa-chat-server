@@ -1,0 +1,116 @@
+body
+{
+	background: #f5f5f5;
+}
+.container
+{
+    background-color: white;
+    max-width: 1010px;
+}
+.header{
+    height: 58px;
+    background-color: #5682a3;
+    padding-left: 16px;
+    color: #fff;
+}
+
+.say-btn
+{
+	text-align:right;
+	margin-top:12px;
+}
+
+#dialog
+{
+	min-height:600px;
+	background:#EEEEEE;
+	max-height: 80vh;
+    overflow-y: scroll;
+    padding: 10px;
+}
+
+.textarea
+{
+    height:6em;
+	width:100%;
+}
+
+#userlist
+{
+	min-height:800px;
+	background:#EEEEEE;
+    padding: 5px;
+}
+
+#userlist > li
+{
+	color:#1372A2;
+	list-style:none;
+	margin-left:12px;
+}
+
+#userlist > h4
+{
+    text-align:center;
+	font-size:14px;
+	font-weight:nold;
+}
+
+.words
+{
+	margin:8px;
+}
+
+.bg-info.msg{
+    padding: 10px;
+    box-shadow: 1px 1px 2px hsla(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    background-color: #d9edf7;
+}
+.bg-info.msg:hover{
+    top:-2px;
+    left:-2px;
+    -webkit-box-shadow: 3px 3px 2px hsla(0, 0%, 0%, 0.3);
+    box-shadow:3px 3px 2x hsla(0, 0%, 0%, 0.3);
+}
+
+.speech_item img{
+    max-height: 300px;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.user_icon
+{
+	float:left;border:1px solid #DDDDDD;padding:2px;margin:0 5px 0 5px;
+    height: 50px;
+    margin-top:0 !important;
+}
+
+.cp
+{
+	color:#888888;
+	text-align:center;
+	font-size:11px;
+}
+
+.thumbnail
+{
+	border:1px solid #CCCCCC;
+}
+
+#sinaEmotion .item{
+    margin: 2px;
+    height: 25px;
+}
+
+#sinaEmotion .face{
+    padding: 1px 2px;
+    height: 25px;
+}
+
+img.sina-emotion{
+    display: inline;
+}
