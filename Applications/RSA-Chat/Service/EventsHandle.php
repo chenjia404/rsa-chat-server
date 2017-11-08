@@ -22,13 +22,13 @@ class EventsHandle
 
 	private function sendToCurrentClient(array $message,int $code = 0,string $msg="成功")
 	{
-		Gateway::sendToCurrentClient(json_encode(["code"=>$code,"msg"=>$msg,"data"=>$message]));
+		Gateway::sendToCurrentClient(json_encode(["code"=>$code,"msg"=>$msg,"data"=>$message],JSON_UNESCAPED_UNICODE));
 	}
 
 
 	private function sendToGroup($room_id,array $message,int $code = 0,string $msg="成功")
 	{
-		Gateway::sendToGroup($room_id,json_encode(["code"=>$code,"msg"=>$msg,"data"=>$message]));
+		Gateway::sendToGroup($room_id,json_encode(["code"=>$code,"msg"=>$msg,"data"=>$message],JSON_UNESCAPED_UNICODE));
 	}
 
 	/**
