@@ -109,7 +109,7 @@ $(function () {
     //长度2048位，提高恶意创建者的成本
     var crypt = new JSEncrypt({default_key_size: 2048});
     //没有本地rsa证书
-    if(typeof localStorage.rsa_privkey === "undefined")
+    if(typeof localStorage.rsa_rsa_privkey === "undefined")
     {
         crypt.getKey();
         localStorage.rsa_rsa_privkey = crypt.getPrivateKey();
@@ -117,7 +117,7 @@ $(function () {
     }
     else
     {
-        crypt.setPrivateKey(localStorage.rsa_privkey);
+        crypt.setPrivateKey(localStorage.rsa_rsa_privkey);
         PublicKey =  crypt.getPublicKey();
     }
 
