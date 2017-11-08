@@ -25,6 +25,11 @@ function onopen() {
     console.log("websocket握手成功，发送登录数据:" + JSON.stringify(login_data));
     ws.send(JSON.stringify(login_data));
 }
+function scroll() {
+    var div = document.getElementById("dialog");
+    if(div.scrollHeight -div.clientHeight -div.scrollTop < 400)
+        div.scrollTop =div.scrollHeight;
+}
 // 服务端发来消息时
 function onmessage(e) {
     console.log(e.data);
@@ -64,7 +69,6 @@ function onmessage(e) {
                 name = null;
                 onopen()
             }
-
     }
 }
 
@@ -121,7 +125,6 @@ $(function () {
         PublicKey =  crypt.getPublicKey();
     }
 
-
     connect();
 
     select_client_id = 'all';
@@ -154,6 +157,9 @@ $(function () {
                 content = $("<div>" + content + "</div>").parseEmotion().html();
                 return content;
             }
+        },
+        updated:function () {
+            scroll();
         }
     });
 });
