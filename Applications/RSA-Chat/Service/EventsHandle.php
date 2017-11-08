@@ -119,6 +119,14 @@ class EventsHandle
 		$room_id = $_SESSION['room_id'];
 		$client_name = $_SESSION['client_name'];
 
+		//上次发言时间
+		$previous_time = $_SESSION['previous_time']??0;
+		if(time()-$previous_time < 10)
+		{
+			$this->sendToCurrentClient(['type'=>'error'],201,"发言速度过快");
+			return;
+		}
+
 		// 私聊
 		if($message['to_client_id'] != 'all')
 		{
@@ -152,6 +160,7 @@ class EventsHandle
 			'content'=>nl2br(htmlspecialchars($message['content'])),
 			'created_at'=>date('Y-m-d H:i:s'),
 		);
+		$_SESSION['previous_time'] = time();
 		$this->sendToGroup($room_id ,$new_message);
 		return;
 	}
