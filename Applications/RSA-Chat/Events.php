@@ -43,6 +43,7 @@ class Events
         $message_data = json_decode($message, true);
         if(!$message_data)
         {
+        	echo "json解析失败";
             return ;
         }
         

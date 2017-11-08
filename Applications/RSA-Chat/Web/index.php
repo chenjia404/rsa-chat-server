@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/js/jquery-sinaEmotion-2.1.0.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
     <script src="/js/index.js"></script>
+    <script src="/js/jsencrypt.min.js"></script>
     <script type="text/javascript">
         // 开启flash的websocket debug
         WEB_SOCKET_DEBUG = true;
@@ -30,7 +31,7 @@
         });
     </script>
 </head>
-<body onload="connect();">
+<body>
 <div class="container" id="">
     <div class="row clearfix header">
         <header>

@@ -61,7 +61,7 @@ class ClientName
 	public function add($room_id,$name)
 	{
 		$this->client_name_list[ $room_id ][ $name ] = true;
-		file_put_contents($this->getFilename(),json_encode($this->client_name_list));
+		file_put_contents($this->getFilename(),json_encode($this->client_name_list,JSON_UNESCAPED_UNICODE));
 	}
 
 
@@ -73,7 +73,7 @@ class ClientName
 	public function remove($room_id,$name)
 	{
 		unset($this->client_name_list[ $room_id ][ $name ]);
-		file_put_contents($this->getFilename(),json_encode($this->client_name_list));
+		file_put_contents($this->getFilename(),json_encode($this->client_name_list,JSON_UNESCAPED_UNICODE));
 	}
 
 	/**

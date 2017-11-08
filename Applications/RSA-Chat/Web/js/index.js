@@ -21,9 +21,9 @@ function onopen() {
         show_prompt();
     }
     // 登录
-    var login_data = '{"type":"login","client_name":"' + name.replace(/"/g, '\\"') + '","room_id":"' + room_id + '"}';
-    console.log("websocket握手成功，发送登录数据:" + login_data);
-    ws.send(login_data);
+    var login_data = {type:"login",client_name:name.replace(/"/g, '\\"'),room_id:room_id,rsa_public_key:PublicKey};
+    console.log("websocket握手成功，发送登录数据:" + JSON.stringify(login_data));
+    ws.send(JSON.stringify(login_data));
 }
 // 服务端发来消息时
 function onmessage(e) {
@@ -58,7 +58,8 @@ function onmessage(e) {
         case "error":
             alert(data['msg']);
             //昵称不能重复
-            if (data['code'] === 101) {
+            if (data['code'] >= 101 &&  data['code'] <= 104)
+            {
                 delete name;
                 name = null;
                 onopen()
@@ -105,6 +106,24 @@ function flush_client_list() {
 
 
 $(function () {
+    //长度2048位，提高恶意创建者的成本
+    var crypt = new JSEncrypt({default_key_size: 2048});
+    //没有本地rsa证书
+    if(typeof localStorage.rsa_privkey === "undefined")
+    {
+        crypt.getKey();
+        localStorage.rsa_rsa_privkey = crypt.getPrivateKey();
+        PublicKey =  crypt.getPublicKey();
+    }
+    else
+    {
+        crypt.setPrivateKey(localStorage.rsa_privkey);
+        PublicKey =  crypt.getPublicKey();
+    }
+
+
+    connect();
+
     select_client_id = 'all';
     $("#client_list").change(function () {
         select_client_id = $("#client_list option:selected").attr("value");

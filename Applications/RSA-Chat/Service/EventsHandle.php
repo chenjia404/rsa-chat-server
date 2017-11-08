@@ -12,9 +12,12 @@ class EventsHandle
 {
 	protected $client_name_list;
 
+	protected $register_by_RSA;
+
 	public function __construct()
 	{
-		$this->client_name_list =  new \App\Service\ClientName();
+		$this->client_name_list =  new ClientName();
+		$this->register_by_RSA  =  new RegisterByRSA();
 	}
 
 	private function sendToCurrentClient(array $message,int $code = 0,string $msg="成功")
@@ -54,6 +57,34 @@ class EventsHandle
 		{
 			$this->sendToCurrentClient(['type'=>'error'],101,"同一个聊天室昵称不能重复");
 			return;
+		}
+
+		$rsa_public_key = $message['rsa_public_key']??'';
+		$rsa_public_key = str_replace("\r\n", "\n", $rsa_public_key);
+		$rsa_public_key = str_replace("\r", "\n", $rsa_public_key);
+		$pub_key = openssl_pkey_get_details(openssl_pkey_get_public($rsa_public_key));
+		if(!$pub_key)
+		{
+			$this->sendToCurrentClient(['type'=>'error'],103,"rsa登录验证失败");
+			return;
+		}
+		if($pub_key['bits'] < 2047)
+		{
+			$this->sendToCurrentClient(['type'=>'error'],103,"rsa位数不对,您的位数是" . $pub_key['bits']);
+			return;
+		}
+
+		//昵称已经被注册，且不是当前用户
+		if($this->register_by_RSA->exists($client_name) && $this->register_by_RSA->getKeyByName($client_name) != $rsa_public_key)
+		{
+			echo $rsa_public_key."\n\n\n";
+			echo $this->register_by_RSA->getKeyByName($client_name)."\n\n\n";
+			$this->sendToCurrentClient(['type'=>'error'],104,"该昵称已经被占用");
+			return;
+		}
+		else
+		{
+			$this->register_by_RSA->registerByRSA($client_name,$rsa_public_key);
 		}
 
 		$this->client_name_list->add($room_id,$client_name);
