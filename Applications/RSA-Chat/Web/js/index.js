@@ -27,8 +27,10 @@ function onopen() {
 }
 function scroll() {
     var div = document.getElementById("dialog");
+    //todo 判断是否上拉
+    console.log(div.scrollHeight -div.clientHeight -div.scrollTop);
     if(div.scrollHeight -div.clientHeight -div.scrollTop < 400)
-        div.scrollTop =div.scrollHeight;
+    div.scrollTop =div.scrollHeight;
 }
 // 服务端发来消息时
 function onmessage(e) {
@@ -162,5 +164,15 @@ $(function () {
             scroll();
         }
     });
+
+    var $inp = $('#textarea'); //所有的input元素
+    $inp.keypress(function (e) { //这里给function一个事件参数命名为e，叫event也行，随意的，e就是窗口发生的事件。
+        var key = e.which; //e.which是按键的值
+        if (key == 13) {
+            onSubmit()
+        }
+    });
+
+
 });
 
