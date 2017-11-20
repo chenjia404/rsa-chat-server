@@ -31,7 +31,3 @@ if(!defined('GLOBAL_START'))
     Worker::runAll();
 }
 
-//启动的时候，重新记录重复昵称
-$client_name_list = new \App\Service\ClientName();
-$client_name_list->removeAll();
-

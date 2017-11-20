@@ -32,13 +32,10 @@ $worker->onWorkerStart = function($worker)
 
 	//事件处理service
 	Events::$EventsHandle = new App\Service\EventsHandle();
-
 	// 将db实例存储在全局变量中(也可以存储在某类的静态成员中)
-	if(getenv("CHAT_LOG_TYPE") == "mysql")
-	{
-		global $db;
-		$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
-	}
+	global $db;
+	$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
+	echo "数据库连接成功\n";
 };
 
 // 如果不是在根目录启动，则运行runAll方法

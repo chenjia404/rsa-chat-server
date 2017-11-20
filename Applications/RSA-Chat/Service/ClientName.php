@@ -10,38 +10,9 @@ namespace App\Service;
 
 class ClientName
 {
-	protected $client_name_list_file = 'client_name_list.json';
-
-	private $client_name_list;
-
-	/**
-	 * 获取项目根目录
-	 * @return string
-	 */
-	public function getRootDir()
-	{
-		return dirname(dirname(dirname(__DIR__)));
-	}
-
-	/**
-	 * 获取记录文件位置
-	 * @return string
-	 */
-	public function getFilename()
-	{
-		return $this->getRootDir() . DIRECTORY_SEPARATOR . $this->client_name_list_file;
-	}
-
-
 	public function __construct()
 	{
-		//昵称数据保存在一个json文件里面
-		if(!file_exists($this->getFilename()))
-		{
-			file_put_contents($this->getFilename(),json_encode(array()));
-		}
 
-		$this->client_name_list = json_decode(file_get_contents($this->getFilename()),true);
 	}
 
 	/**
@@ -52,7 +23,16 @@ class ClientName
 	 */
 	public function exists($room_id,$name)
 	{
-		return isset($this->client_name_list[ $room_id ][ $name ]);
+		global $db;
+		$exists = $db->select("id")
+			->from("client_name_list")
+			->where('name=:name AND room_id= :room_id')
+			->bindValues([
+				'name'    => $name,
+				'room_id' => $room_id
+			])->query();
+
+		return isset($exists[ 0 ]);
 	}
 
 	/**
@@ -60,8 +40,11 @@ class ClientName
 	 */
 	public function add($room_id,$name)
 	{
-		$this->client_name_list[ $room_id ][ $name ] = true;
-		file_put_contents($this->getFilename(),json_encode($this->client_name_list,JSON_UNESCAPED_UNICODE));
+		global $db;
+		$db->insert('client_name_list')->cols([
+			'room_id' => $room_id,
+			'name'    => $name
+		])->query();
 	}
 
 
@@ -72,8 +55,13 @@ class ClientName
 	 */
 	public function remove($room_id,$name)
 	{
-		unset($this->client_name_list[ $room_id ][ $name ]);
-		file_put_contents($this->getFilename(),json_encode($this->client_name_list,JSON_UNESCAPED_UNICODE));
+		global $db;
+		$db->delete('client_name_list')
+			->where('name=:name AND room_id= :room_id')
+			->bindValues([
+			'name'    => $name,
+			'room_id' => $room_id
+		])->query();
 	}
 
 	/**
@@ -81,6 +69,7 @@ class ClientName
 	 */
 	public function removeAll()
 	{
-		file_put_contents($this->getFilename(),json_encode(array()));
+		global $db;
+		$db->query("truncate client_name_list");
 	}
 }
