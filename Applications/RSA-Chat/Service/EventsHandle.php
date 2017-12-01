@@ -119,7 +119,7 @@ class EventsHandle
 
 		//上次发言时间
 		$previous_time = $_SESSION['previous_time']??0;
-		if(time()-$previous_time < 10)
+		if(time()-$previous_time < 2)
 		{
 			$this->sendToCurrentClient(['type'=>'error'],201,"发言速度过快");
 			return;
