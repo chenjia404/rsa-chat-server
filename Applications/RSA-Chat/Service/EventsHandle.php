@@ -77,8 +77,6 @@ class EventsHandle
 		//昵称已经被注册，且不是当前用户
 		if($this->register_by_RSA->exists($client_name) && $this->register_by_RSA->getKeyByName($client_name) != $rsa_public_key)
 		{
-			echo $rsa_public_key."\n\n\n";
-			echo $this->register_by_RSA->getKeyByName($client_name)."\n\n\n";
 			$this->sendToCurrentClient(['type'=>'error'],104,"该昵称已经被占用");
 			return;
 		}
