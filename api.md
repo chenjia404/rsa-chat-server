@@ -10,13 +10,13 @@ login接口(rsa验证类型)
 
 请求参数：
 
-type：login
+* type：login
 
-room_id：房间号，一般为整型数字。
+* room_id：房间号，一般为整型数字。
 
-client_name：用户昵称，16位长度内的字符串
+* client_name：用户昵称，16位长度内的字符串
 
-rsa_public_key：rsa公钥，格式如下：
+* rsa_public_key：rsa公钥，格式如下：
 ```
 -----BEGIN PUBLIC KEY----- 
 MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBRTvI1wg6I7tpOuMgdnyfc
@@ -25,15 +25,15 @@ AgMBAAa=
 ```
 返回参数：
 
-type：reply_login 或者 error
+* type：reply_login 或者 error
 
-client_name：client_name字段是当前用户的实际昵称，因为用户昵称重复的时候，服务器会自动加随机数
+* client_name：client_name字段是当前用户的实际昵称，因为用户昵称重复的时候，服务器会自动加随机数
 
-client_id：唯一id，用于私聊时的指定id。
+* client_id：唯一id，用于私聊时的指定id。
 
-created_at：服务器当前时间。
+* created_at：服务器当前时间。
 
-client_list：当前聊天室用户列表，数据类型是一个数组，格式client_id：client_name。
+* client_list：当前聊天室用户列表，数据类型是一个数组，格式client_id：client_name。
 
 如果登录成功，会返回reply_login类型响应，如果失败会返回error。
 
@@ -42,21 +42,21 @@ client_list：当前聊天室用户列表，数据类型是一个数组，格式
 
 请求参数：
 
-msg：发言内容
+* msg：发言内容
 
 返回参数：
 
-type：say
+* type：say
 
-from_client_id：用户唯一id，如果是当前登录用户，则是自己的发送的。
+* from_client_id：用户唯一id，如果是当前登录用户，则是自己的发送的。
 
-user：一个数组，主要用昵称和头像字段。
+* user：一个数组，主要用昵称和头像字段。
 
-to_client_id：默认是全部(all)，如果是私聊，就会是当前用户的client_id。
+* to_client_id：默认是全部(all)，如果是私聊，就会是当前用户的client_id。
 
-content：聊天内容。
+* content：聊天内容。
 
-created_at：服务器当前时间。
+* created_at：服务器当前时间。
 
 如果成功调用，返回say响应，要注意的是，其它用户发言也是该相应。
 
