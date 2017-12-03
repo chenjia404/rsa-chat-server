@@ -24,12 +24,12 @@ $worker->count = 1;
 // 服务注册地址
 $worker->registerAddress = '127.0.0.1:1236';
 
+//加载env文件
+$dotenv = new Dotenv\Dotenv(dirname(dirname(__DIR__)));
+$dotenv->load();
+
 $worker->onWorkerStart = function($worker)
 {
-	//加载env文件
-	$dotenv = new Dotenv\Dotenv(dirname(dirname(__DIR__)));
-	$dotenv->load();
-
 	//事件处理service
 	Events::$EventsHandle = new App\Service\EventsHandle();
 	// 将db实例存储在全局变量中(也可以存储在某类的静态成员中)
@@ -44,3 +44,8 @@ if(!defined('GLOBAL_START'))
     Worker::runAll();
 }
 
+//清空上次登录用户
+global $db;
+$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
+$ClientName = new App\Service\ClientName();
+$ClientName->removeAll();
