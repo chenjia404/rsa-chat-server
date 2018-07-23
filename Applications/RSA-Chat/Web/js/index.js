@@ -41,8 +41,15 @@ function onmessage(e) {
         case 'ping':
             ws.send('{"type":"pong"}');
             break;
-        // 登录 更新用户列表
-        case 'login':
+        // 登录
+        case 'reply_login':
+            client_list[data["data"]['client_id']] = data["data"]['client_name'];
+            localStorage.name = data["data"]['client_name'];
+            flush_client_list();
+            console.log(data["data"]['client_name'] + "登录成功");
+            break;
+        // 更新用户列表
+        case 'new_user_login':
             if (data["data"]['client_list']) {
                 client_list = data["data"]['client_list'];
             }
@@ -82,6 +89,7 @@ function show_prompt() {
     if (!name || name == 'null') {
         name = '游客';
     }
+
 }
 
 // 提交对话

@@ -98,12 +98,13 @@ class EventsHandle
 		$clients_list[$client_id] = $client_name;
 
 		// 转播给当前房间的所有客户端，xx进入聊天室 message {type:login, client_id:xx, name:xx}
-		$new_message = ['type'=>$message['type'], 'client_id'=>$client_id, 'client_name'=>htmlspecialchars($client_name), 'time'=>date('Y-m-d H:i:s')];
+		$new_message = ['type'=>'new_user_login', 'client_id'=>$client_id, 'client_name'=>htmlspecialchars($client_name), 'created_at'=>date('Y-m-d H:i:s')];
 		$this->sendToGroup($room_id,$new_message);
 		Gateway::joinGroup($client_id, $room_id);
 
 		// 给当前用户发送用户列表
 		$new_message['client_list'] = $clients_list;
+		$new_message['type'] = 'reply_login';
 		$this->sendToCurrentClient($new_message);
 		return;
 	}
