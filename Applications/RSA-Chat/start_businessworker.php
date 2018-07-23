@@ -34,7 +34,7 @@ $worker->onWorkerStart = function($worker)
 	Events::$EventsHandle = new App\Service\EventsHandle();
 	// 将db实例存储在全局变量中(也可以存储在某类的静态成员中)
 	global $db;
-	if(getenv("CHAT_LOG_TYPE") == "musql")
+	if(getenv("CHAT_LOG_TYPE") == "mysql")
 	{
 		$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
 		echo "数据库连接成功\n";
@@ -49,6 +49,9 @@ if(!defined('GLOBAL_START'))
 
 //清空上次登录用户
 global $db;
-$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
+if(getenv("CHAT_LOG_TYPE") == "mysql")
+{
+	$db = new Workerman\MySQL\Connection(getenv('DB_HOST'), getenv('DB_PORT'), getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));
+}
 $ClientName = new App\Service\ClientName();
 $ClientName->removeAll();
